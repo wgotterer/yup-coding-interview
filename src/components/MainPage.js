@@ -60,18 +60,29 @@ import laughing from '../svg/laughing.svg'
     }
     function handleDownSmart(){
         setSmartVote(smartVote - 1)
+         
     }
+    
+      const levelColors = {
+        first: '#00E4FF',
+        second: '#00FFA6',
+        third: '#3EFF00',
+        fourth: '#FFFB00',
+        fifth: '#FFAE00',
+        sixth: '#FF6100'
+      }
+
 
     return postInfo && postInfo["weights"] ? (
             <div className="main-page-container">
             <h1>YUP MAINPAGE</h1>
-            <img src={postInfo.previewData.img} height="500px" width="500px" />
+            <img src={postInfo.previewData.img} height="500px" width="500px"  />
             <Grid container spacing={3}>
              
             <Grid item xs={4}>
-            <div className="fave-icon">
+            <div className="fave-icon" style={{backgroundColor: levelColors[postInfo["sextiles"]["popularity"]]}} >
             <Tooltip title="Favorite">
-            <img src={heart} height="20px" width="20px" />
+            <img src={heart} height="20px" width="20px"   />
             </Tooltip>
             <div>{postInfo["weights"]["popularity"]}</div>
              <>
@@ -86,7 +97,7 @@ import laughing from '../svg/laughing.svg'
 
 
             <Grid item xs={4}>
-            <div className="fave-icon">
+            <div className="fave-icon" style={{backgroundColor: levelColors[postInfo["sextiles"]["intelligence"]]}}>
             <Tooltip title="Smart">
             <img src={idea} height="20px" width="20px" />
             </Tooltip>
@@ -101,7 +112,7 @@ import laughing from '../svg/laughing.svg'
 
 
             <Grid item xs={4}>
-            <div className="fave-icon">
+            <div className="fave-icon" style={{backgroundColor: levelColors[postInfo["sextiles"]["funny"]]}}>
             <Tooltip title="Funny">
             <img src={laughing} height="20px" width="20px" />
             </Tooltip>
