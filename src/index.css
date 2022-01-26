@@ -27,3 +27,24 @@ margin: auto;
   visibility: visible;
 }
 
+.arrow-up{
+  color: black;
+}
+
+.arrow-up:hover{
+  color: rgb(71, 243, 71);
+}
+
+.arrow-down{
+  color: black;
+}
+
+.arrow-down:hover{
+  color: rgb(243, 71, 71);
+}
+
+.underline{
+  text-decoration: underline;
+  text-decoration-thickness: 4px;
+}
+

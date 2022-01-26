@@ -14,37 +14,23 @@ import laughing from '../svg/laughing.svg'
     const [popularityVote, setPopularityVote] = useState()
     const [funnyVote, setFunnyVote] = useState()
     const [smartVote, setSmartVote] = useState()
-
-
-
+ 
     useEffect(() => {
         fetch(" https://api.yup.io/posts/post/12294")
         .then(r => r.json())
         .then((profileData) => {
             setPostInfo(profileData)
-            if((profileData["catVotes"]["popularity"]["up"]) > 0){
-                setPopularityVote(profileData["catVotes"]["popularity"]["up"])
-            }else{ 
-                setPopularityVote(-Math.abs(profileData["catVotes"]["popularity"]["down"]))
-            }
-            if((profileData["catVotes"]["funny"]["up"]) > 0){
-                setFunnyVote(profileData["catVotes"]["funny"]["up"])
-            }else{ 
-                setFunnyVote(-Math.abs(profileData["catVotes"]["funny"]["down"]))
-            }
-            if((profileData["catVotes"]["intelligence"]["up"]) > 0){
-                setSmartVote(profileData["catVotes"]["intelligence"]["up"])
-            }else{ 
-                setSmartVote(-Math.abs(profileData["catVotes"]["intelligence"]["down"]))
-            }
+            
+                setPopularityVote(profileData["catVotes"]["popularity"]["up"] - profileData["catVotes"]["popularity"]["down"] )
+                setFunnyVote(profileData["catVotes"]["funny"]["up"] - profileData["catVotes"]["funny"]["down"])
+                setSmartVote(profileData["catVotes"]["intelligence"]["up"] - profileData["catVotes"]["intelligence"]["down"])
 
         })
         
     }, [])
   
-
     function handleUpPopular(){
-        setPopularityVote(popularityVote + 1)
+            setPopularityVote(popularityVote + 1)
     }
     function handleUpFunny(){
         setFunnyVote(funnyVote + 1)
@@ -53,8 +39,8 @@ import laughing from '../svg/laughing.svg'
         setSmartVote(smartVote + 1)
     }
     function handleDownPopular(){
-        setPopularityVote(popularityVote - 1)
-    }
+            setPopularityVote(popularityVote - 1)
+        }
     function handleDownFunny(){
         setFunnyVote(funnyVote - 1)
     }
@@ -72,7 +58,6 @@ import laughing from '../svg/laughing.svg'
         sixth: '#FF6100'
       }
 
-
     return postInfo && postInfo["weights"] ? (
             <div className="main-page-container">
             <h1>YUP MAINPAGE</h1>
@@ -80,47 +65,60 @@ import laughing from '../svg/laughing.svg'
             <Grid container spacing={3}>
              
             <Grid item xs={4}>
-            <div className="fave-icon" style={{backgroundColor: levelColors[postInfo["sextiles"]["popularity"]]}} >
+            <div className="fave-icon" >
             <Tooltip title="Favorite">
             <img src={heart} height="20px" width="20px"   />
             </Tooltip>
-            <div>{postInfo["weights"]["popularity"]}</div>
-             <>
-             <div className="grid-fave">
-             <KeyboardArrowUpIcon onClick={handleUpPopular} /> 
+            <Tooltip title="Post Yup Score">
+            <div className="underline" style={{textDecorationColor: levelColors[postInfo["sextiles"]["popularity"]]}}>{postInfo["weights"]["popularity"]}</div>
+            </Tooltip>
+            <Tooltip title="Number of Votes">
             <div>{popularityVote}</div>
-            < KeyboardArrowDownIcon onClick={handleDownPopular}  />
+            </Tooltip>
+             <div className="grid-fave">
+            <KeyboardArrowUpIcon  className="arrow-up"  onClick={handleUpPopular} /> 
+            <div>{popularityVote}</div>
+            < KeyboardArrowDownIcon className="arrow-down" onClick={handleDownPopular}  />
             </div>
-             </> 
              </div>
             </Grid>
 
 
             <Grid item xs={4}>
-            <div className="fave-icon" style={{backgroundColor: levelColors[postInfo["sextiles"]["intelligence"]]}}>
+            <div className="fave-icon" >
             <Tooltip title="Smart">
             <img src={idea} height="20px" width="20px" />
             </Tooltip>
-            <div>{postInfo["weights"]["intelligence"]}</div>
-            <div className="grid-fave">
-            <KeyboardArrowUpIcon onClick={handleUpSmart} />
+            <Tooltip title="Post Yup Score">
+            <div className="underline" style={{textDecorationColor: levelColors[postInfo["sextiles"]["intelligence"]]}} >{postInfo["weights"]["intelligence"]}</div>
+            </Tooltip>
+            <Tooltip title="Number of Votes">
             <div>{smartVote}</div>
-            < KeyboardArrowDownIcon onClick={handleDownSmart} />
+            </Tooltip>
+            <div className="grid-fave">
+            <KeyboardArrowUpIcon className="arrow-up" onClick={handleUpSmart} />
+            <div>{smartVote}</div>
+            < KeyboardArrowDownIcon className="arrow-down" onClick={handleDownSmart} />
             </div>
             </div>
             </Grid>
 
 
             <Grid item xs={4}>
-            <div className="fave-icon" style={{backgroundColor: levelColors[postInfo["sextiles"]["funny"]]}}>
+            <div className="fave-icon" >
             <Tooltip title="Funny">
             <img src={laughing} height="20px" width="20px" />
             </Tooltip>
-            <div>{Math.floor(postInfo["weights"]["funny"])}</div>
-            <div className="grid-fave">
-            <KeyboardArrowUpIcon onClick={handleUpFunny} />
+            <Tooltip title="Post Yup Score">
+            <div className="underline" style={{textDecorationColor: levelColors[postInfo["sextiles"]["funny"]]}}>{Math.floor(postInfo["weights"]["funny"])} </div>
+            </Tooltip>
+            <Tooltip title="Number of Votes">
             <div>{funnyVote}</div>
-            < KeyboardArrowDownIcon onClick={handleDownFunny}/>
+            </Tooltip>
+            <div className="grid-fave">
+            <KeyboardArrowUpIcon className="arrow-up" onClick={handleUpFunny} />
+            <div>{funnyVote}</div>
+            < KeyboardArrowDownIcon className="arrow-down" onClick={handleDownFunny}/>
             </div>
             </div>
             </Grid>
