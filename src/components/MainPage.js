@@ -4,23 +4,26 @@ import heart from '../svg/heartsvg.svg'
 import idea from '../svg/idea.svg'
 import laughing from '../svg/laughing.svg'
 import GridItem from './GridItem';
+import Fetch from '../Fetch'
 
- function MainPage() {
+  function MainPage() {
 
     const [postInfo, setPostInfo] = useState()
     const [popularityVote, setPopularityVote] = useState()
     const [funnyVote, setFunnyVote] = useState()
     const [smartVote, setSmartVote] = useState()
  
+
     useEffect(() => {
-        fetch(" https://api.yup.io/posts/post/12294")
-        .then(r => r.json())
-        .then((profileData) => {
+        Fetch(" https://api.yup.io/posts/post/12294")
+        .then(profileData => {
             setPostInfo(profileData)
-                setPopularityVote(profileData["catVotes"]["popularity"]["up"] - profileData["catVotes"]["popularity"]["down"] )
-                setFunnyVote(profileData["catVotes"]["funny"]["up"] - profileData["catVotes"]["funny"]["down"])
-                setSmartVote(profileData["catVotes"]["intelligence"]["up"] - profileData["catVotes"]["intelligence"]["down"])
-        })   
+            setPopularityVote(profileData["catVotes"]["popularity"]["up"] - profileData["catVotes"]["popularity"]["down"] )
+            setFunnyVote(profileData["catVotes"]["funny"]["up"] - profileData["catVotes"]["funny"]["down"])
+            setSmartVote(profileData["catVotes"]["intelligence"]["up"] - profileData["catVotes"]["intelligence"]["down"])
+        } )
+       
+           
     }, [])
   
     const levelColors = {
